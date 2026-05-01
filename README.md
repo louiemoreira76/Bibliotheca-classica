@@ -1,58 +1,76 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 Bibliotheca Classica – Buscador de Livros com Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div align="center">
 
-## About Laravel
+[![GitHub stars](https://img.shields.io/badge/status-concluído-brightgreen)]()
+[![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?logo=laravel)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?logo=php)](https://php.net)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Aplicação web que integra as APIs do Google Books e Open Library para pesquisa e visualização de livros.**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+</div>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📖 Sobre o projeto
 
-## Learning Laravel
+Bibliotheca Classica foi desenvolvido como **teste técnico para uma vaga de estágio** (infelizmente não fui aprovado). É uma aplicação Laravel que consome duas APIs públicas de livros:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Google Books API** – busca por termos, assuntos, visualização de capas e metadados.
+- **Open Library API** – fonte complementar para pesquisa, com foco em livros de domínio público e acervo aberto.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+O usuário pode pesquisar por título, autor ou assunto, visualizar detalhes (sinopse, autor, editora, número de páginas) e navegar por coleções temáticas.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## ✨ Funcionalidades
 
-## Agentic Development
+- 🔍 **Busca combinada** – resultados vindos do Google Books e Open Library na mesma página.
+- 📖 **Detalhes do livro** – informações como título, autor(es), editora, data de publicação, número de páginas, descrição (quando disponível) e capa.
+- 🏷️ **Navegação por assuntos** – seções com categorias pré-definidas (ex.: "Ficção Científica", "História", "Romance").
+- 🎨 **Interface responsiva** – construída com Bootstrap 5 (via CDN) e Blade templates.
+- ⚙️ **Configuração via .env** – chave da API Google Books opcional (modo sem chave funciona com limites reduzidos).
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 🛠️ Tecnologias
 
-```bash
-composer require laravel/boost --dev
+| Camada          | Tecnologia                                                                 |
+|-----------------|----------------------------------------------------------------------------|
+| Backend         | PHP 8.2+, Laravel 11                                                      |
+| Frontend        | Blade templates, Bootstrap 5, CSS básico                                   |
+| APIs externas   | Google Books API, Open Library API                                         |
+| Cache           | Arquivo (driver `file`) – para otimizar requisições à API                  |
+| Build tools     | Vite (para assets, se houver), npm                                        |
+| Servidor local  | `php artisan serve`                                                        |
 
-php artisan boost:install
+## 🚀 Como rodar localmente
+
+### Pré‑requisitos
+- PHP 8.2 ou superior (com extensões: `curl`, `json`, `mbstring`, `xml`, `sqlite3`)
+- Composer
+- Node.js e npm (opcional, apenas para compilar assets)
+- SQLite (ou outro banco – o projeto usa SQLite por padrão)
+
+## 📁 Project Structure
+
 ```
-
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+bibliotheca-classica/
+├── app/
+│   └── Http/
+│       ├── Controllers/
+│       │   └── BookController.php          # Controlador principal (busca, detalhes, assuntos)
+│       └── Services/
+│           ├── GoogleBooksService.php      # Wrapper para Google Books API
+│           └── OpenLibraryService.php      # Wrapper para Open Library API
+├── config/
+│   └── services.php                        # Configuração da chave da API (lê do .env)
+├── resources/
+│   └── views/
+│       ├── layouts/
+│       │   └── app.blade.php              # Layout base (header, nav, footer)
+│       ├── home.blade.php                 # Página inicial com coleções em destaque
+│       └── books/
+│           ├── search.blade.php           # Resultados da busca (duas fontes)
+│           ├── show.blade.php             # Detalhes de um livro específico
+│           ├── subject.blade.php          # Página de navegação por assunto
+│           └── partials/
+│               ├── list-item.blade.php    # Item de resultado do Google Books
+│               └── ol-list-item.blade.php # Item de resultado do Open Library
+└── routes/
+    └── web.php                            # Rotas da aplicação
+```
